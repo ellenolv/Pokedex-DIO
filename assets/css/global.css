@@ -1,7 +1,6 @@
-.body{
+.HTML, body{
     
     font-family: 'Roboto', sans-serif;
-
     border-sizing: border-box; /*vai fazer com que o padding e o border não aumente o tamanho do elemento*/
 }
 
@@ -21,18 +20,50 @@ ol.pokemons{
     margin: 0;
 }
 
-ol.pokemons li{
+.pokemon{
     display: flex;
     flex-direction: column;
     margin: 0.5rem;
     padding: 2rem 1rem;
-    background-color: #14a06f;
-    color: white;
+    background-color: #46D0B1;
+    color: #FFF;
     border-radius: 1rem;
  
 }
-ol.pokemons li img{
-    align-self: flex-end;
+.pokemon .number{
+    color: #11726f69;
+    text-align: right;
+    font-size: .625rem;
+}
+.pokemon .name{
+    color: #FFF;
+    margin-bottom: 0;
+}
+
+.pokemon .detail{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.pokemon .detail .types{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    
+}
+
+.pokemon .detail .types .type {
+    background-color: #9DECDD;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    font-size: .625rem;
+    margin: .25rem;
+    border-radius: 1rem;
+    
+}
+
+.pokemon .detail img{
     max-width: 100%;
-    height: 100px;
+    height: 70px;
 }
