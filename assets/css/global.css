@@ -1,0 +1,38 @@
+.body{
+    
+    font-family: 'Roboto', sans-serif;
+
+    border-sizing: border-box; /*vai fazer com que o padding e o border não aumente o tamanho do elemento*/
+}
+
+.content{
+    padding: 1rem;
+
+}
+
+.content h1{ 
+   margin: 0;
+}
+ol.pokemons{
+    display: grid; /*vai deixar a lista em formato de tabela*/
+    grid-template-columns: 1fr 1fr; /*vai dividir a lista em duas colunas*/
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+ol.pokemons li{
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem;
+    padding: 2rem 1rem;
+    background-color: #14a06f;
+    color: white;
+    border-radius: 1rem;
+ 
+}
+ol.pokemons li img{
+    align-self: flex-end;
+    max-width: 100%;
+    height: 100px;
+}
