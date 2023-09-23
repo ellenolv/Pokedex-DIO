@@ -32,18 +32,16 @@ function convertPokemonToLi(pokemon = []) {
 const pokemonList = document.getElementById('pokemonList')
 
 pokeApi.getPokemon().then((pokemons) => {
-        const listItens = []
+/**
+ * .MAP
+ * O Value é o item da lista 
+ * transforma a lista de pokemons em uma lista de nomes 
+ */
 
-        for (let i = 0; i < pokemons.length; i++) {
-            const pokemon = pokemons[i]; //pega 1 pokemon da lista
-            
-           listItens.push(convertPokemonToLi(pokemon)) //adiciona o li no array
-           
-            
-           
-        }
-        console.log(listItens)
-    }) //pega o json e mostra no console
+    pokemonList.innerHTML = pokemons.map(convertPokemonToLi).join()
+                
+
+    }) 
     //catch trata o erro da requisição
     .catch((error) => console.log(error)) 
     
