@@ -1,48 +1,73 @@
-
-const offset = 0;
-const limit = 5;
-
-const url = ` https://pokeapi.co/api/v2/pokemon?offset=${offset}&imit=${limit}`
-
-
-function convertPokemonTypesToli(pokemonTypes){
-    return pokemonTypes.map((typeSlot) => `<li class="type">${typeSlot.type.name}</li>`)
-}
-
-function convertPokemonToLi(pokemon = []) {
-    return `
-    <li class="pokemon">
-    <span class="number">#${pokemon.order}</span>
-    <span class="name">${pokemon.name}</span>
-    <div class="detail">
-        <ol class="types">
-            ${convertPokemonTypesToli(pokemon.types).join(' ')}
-        </ol>
-
-        <img src="${pokemon.sprites.other.dream_world.front_default}" alt="${pokemon.name}">
-    </div>
-    
-    </li>
-    `
-    
-    
-}
-
-
-
 const pokemonList = document.getElementById('pokemonList')
+const loadMoreButton = document.getElementById('loadMoreButton')
 
-pokeApi.getPokemon().then((pokemons) => {
-/**
- * .MAP
- * O Value é o item da lista 
- * transforma a lista de pokemons em uma lista de nomes 
- */
 
-    pokemonList.innerHTML = pokemons.map(convertPokemonToLi).join('') 
-                
+let offset = 0;
+const limit = 5;
+const maxRecords = 151;
 
-    }) 
-    //catch trata o erro da requisição
-    .catch((error) => console.log(error)) 
+const url = ` https://pokeapi.co/api/v2/pokemon?offset=${offset}&imit=${limit}` 
+
+function loadPokemonItens(offset, limit) {
     
+    pokeApi.getPokemon(offset, limit).then((pokemons = []) => {
+        const newHtml = pokemons.map((pokemon) => `
+            <li class="pokemon ${pokemon.type}"   data-number="${pokemon.number}" onclick="getPokemonDetails(this)">
+                <span class="number">#${pokemon.number}</span>
+                <span class="name">${pokemon.name}</span>
+        
+                <div class="detail">
+                    <ol class="types ">
+                        ${pokemon.types.map((type) => `<li  class="type ${type}">${type}</li>`).join(' ')} 
+                    </ol>
+        
+                    <img src="${pokemon.photo}" alt="${pokemon.name}">
+                </div>
+            
+            </li>
+            `
+             ).join('')
+        pokemonList.innerHTML += newHtml
+    })
+}
+
+loadPokemonItens(offset, limit)
+
+loadMoreButton.addEventListener('click', () => {
+    offset += limit
+    const qtdRecordsWithNexPage = offset + limit 
+
+    if (qtdRecordsWithNexPage >= maxRecords) { 
+        const newLimit = maxRecords - offset
+        loadPokemonItens(offset, newLimit)
+
+        loadMoreButton.parentElement.removeChild(loadMoreButton)
+    } else {
+        loadPokemonItens(offset, limit)
+    }
+})
+
+function getPokemonDetails(element) {
+    const pokemonNumber = element.getAttribute('data-number');
+
+    pokeApi.getPokemonByNameOrNumber(pokemonNumber)
+        .then((pokemon) => {
+            // Armazene os detalhes do Pokémon no localStorage
+            localStorage.setItem('pokemonDetails', JSON.stringify(pokemon));
+
+            // Abra a página details.html em uma nova janela ou guia
+            const detailsPage = window.open('details.html', '_blank');
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+        
+}
+pokemonList.addEventListener('click', (event) => {
+    const clickedPokemon = event.target.closest('.pokemon');
+    if (clickedPokemon) {
+        getPokemonDetails(clickedPokemon);
+    }
+});
+
+
