@@ -4,9 +4,9 @@ const loadMoreButton = document.getElementById('loadMoreButton')
 
 let offset = 0;
 const limit = 5;
-const maxRecords = 151;
+const maxRecords = 248;
 
-const url = ` https://pokeapi.co/api/v2/pokemon?offset=${offset}&imit=${limit}` 
+const url = ` https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}` 
 
 function loadPokemonItens(offset, limit) {
     
@@ -25,8 +25,8 @@ function loadPokemonItens(offset, limit) {
                 </div>
             
             </li>
-            `
-             ).join('')
+            `).join('')
+
         pokemonList.innerHTML += newHtml
     })
 }

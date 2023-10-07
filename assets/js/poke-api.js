@@ -5,7 +5,7 @@ const pokeApi ={}
 function convertPokeApiDetailToPokemon(pokeDetail){ //função que converte o detalhe do pokemon para o modelo de dados do pokemon que criamos 
 
     const pokemon = new Pokemon();
-    pokemon.number = pokeDetail.order
+    pokemon.number = pokeDetail.id
     pokemon.name = pokeDetail.name
     
     pokemon.height = pokeDetail.height
@@ -40,7 +40,7 @@ pokeApi.getPokemonsDetail = (pokemon) =>{
 }
 
 //a linha abaixo está criando uma função dentro do objeto pokeApi que vai fazer uma requisição http e o tratamento da resposta
-pokeApi.getPokemon = (offset = 0, limit =5) => {
+pokeApi.getPokemon = (offset = 0, limit = 5) => {
 
     const url = ` https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
     return fetch(url) 
